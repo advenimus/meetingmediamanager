@@ -2,216 +2,107 @@
 <template>
   <v-form ref="appForm" v-model="valid">
     <form-input
-      id="app.offline"
-      v-model="app.offline"
-      field="switch"
-      :label="$t('offlineMode')"
-      :locked="$isLocked('app.offline')"
-    />
+id="app.offline" v-model="app.offline" field="switch" :label="$t('offlineMode')"
+      :locked="$isLocked('app.offline')" />
     <form-input
-      id="app.theme"
-      v-model="app.theme"
-      field="select"
-      :items="[
-        { text: $t('light'), value: 'light' },
-        { text: $t('dark'), value: 'dark' },
-        { text: $t('system'), value: 'system' },
-      ]"
-      :label="$t('themePreference')"
-      :locked="$isLocked('app.theme')"
-    />
+id="app.theme" v-model="app.theme" field="select" :items="[
+      { text: $t('light'), value: 'light' },
+      { text: $t('dark'), value: 'dark' },
+      { text: $t('system'), value: 'system' },
+    ]" :label="$t('themePreference')" :locked="$isLocked('app.theme')" />
     <form-input
-      id="app.congregationName"
-      v-model="app.congregationName"
-      :label="$t('congregationName')"
-      :locked="$isLocked('app.congregationName')"
-      required
-      @blur="renameBg()"
-    />
+id="app.congregationName" v-model="app.congregationName" :label="$t('congregationName')"
+      :locked="$isLocked('app.congregationName')" required @blur="renameBg()" />
     <form-input
-      id="app.localAppLang"
-      v-model="app.localAppLang"
-      field="autocomplete"
-      :label="$t('localAppLang')"
-      :items="$i18n.locales"
-      item-text="name"
-      item-value="code"
-      required
-      auto-select-first
-      :locked="$isLocked('app.localAppLang')"
-    />
+id="app.localAppLang" v-model="app.localAppLang" field="autocomplete" :label="$t('localAppLang')"
+      :items="$i18n.locales" item-text="name" item-value="code" required auto-select-first
+      :locked="$isLocked('app.localAppLang')" />
     <v-row>
       <v-col cols="auto" class="pr-0 text-left">
         <v-btn
-          id="app.localOutputPathBtn"
-          color="primary"
-          style="height: 40px"
-          :disabled="$isLocked('app.localOutputPath')"
-          @click="setLocalOutputPath"
-        >
+id="app.localOutputPathBtn" color="primary" style="height: 40px"
+          :disabled="$isLocked('app.localOutputPath')" @click="setLocalOutputPath">
           {{ $t('browse') }}
         </v-btn>
       </v-col>
       <v-col class="pl-0">
         <form-input
-          id="app.localOutputPath"
-          v-model="app.localOutputPath"
-          :label="$t('mediaSaveFolder')"
-          readonly
-          required
-          :locked="$isLocked('app.localOutputPath')"
-        />
+id="app.localOutputPath" v-model="app.localOutputPath" :label="$t('mediaSaveFolder')" readonly
+          required :locked="$isLocked('app.localOutputPath')" />
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="auto" class="pr-0 text-left">
         <v-btn
-          id="app.customCachePathBtn"
-          color="primary"
-          style="height: 40px"
-          :disabled="$isLocked('app.customCachePath')"
-          @click="setCustomCachePath"
-        >
+id="app.customCachePathBtn" color="primary" style="height: 40px"
+          :disabled="$isLocked('app.customCachePath')" @click="setCustomCachePath">
           {{ $t('browse') }}
         </v-btn>
       </v-col>
       <v-col class="pl-0">
         <form-input
-          id="app.customCachePath"
-          v-model="app.customCachePath"
-          :label="$t('customCachePath')"
-          readonly
-          clearable
-          :locked="$isLocked('app.customCachePath')"
-        />
+id="app.customCachePath" v-model="app.customCachePath" :label="$t('customCachePath')" readonly
+          clearable :locked="$isLocked('app.customCachePath')" />
       </v-col>
     </v-row>
     <form-input
-      id="app.outputFolderDateFormat"
-      v-model="app.outputFolderDateFormat"
-      field="select"
-      :label="$t('outputFolderDateFormat')"
-      :items="dateFormats"
-      item-text="label"
-      item-value="value"
-      :locked="$isLocked('app.outputFolderDateFormat')"
-    />
+id="app.outputFolderDateFormat" v-model="app.outputFolderDateFormat" field="select"
+      :label="$t('outputFolderDateFormat')" :items="dateFormats" item-text="label" item-value="value"
+      :locked="$isLocked('app.outputFolderDateFormat')" />
     <v-divider class="mb-6" />
     <form-input
-      v-if="!isLinux"
-      id="app.autoRunAtBoot"
-      v-model="app.autoRunAtBoot"
-      field="switch"
-      :label="$t('autoRunAtBoot')"
-      :locked="$isLocked('app.autoRunAtBoot')"
-    />
+v-if="!isLinux" id="app.autoRunAtBoot" v-model="app.autoRunAtBoot" field="switch"
+      :label="$t('autoRunAtBoot')" :locked="$isLocked('app.autoRunAtBoot')" />
     <template v-for="(option, i) in automationOptions">
       <v-divider v-if="option === 'div'" :key="'div-' + i" class="mb-6" />
       <form-input
-        v-else
-        :id="`app.auto${option}`"
-        :key="option"
-        v-model="app[`auto${option}`]"
-        field="switch"
-        :label="$t(`auto${option}`)"
-        :locked="$isLocked(`app.auto${option}`)"
-      />
+v-else :id="`app.auto${option}`" :key="option" v-model="app[`auto${option}`]" field="switch"
+        :label="$t(`auto${option}`)" :locked="$isLocked(`app.auto${option}`)" />
     </template>
-    <form-input
-      id="app.obs.enable"
-      v-model="app.obs.enable"
-      field="switch"
-      :locked="$isLocked('app.obs.enable')"
-    >
+    <form-input id="app.obs.enable" v-model="app.obs.enable" field="switch" :locked="$isLocked('app.obs.enable')">
       <template #label>
         <span v-html="$t('enableObs')" />
       </template>
     </form-input>
     <template v-if="app.obs.enable">
-      <form-input
-        id="app.obs.useV4"
-        v-model="app.obs.useV4"
-        field="switch"
-        :locked="$isLocked('app.obs.useV4')"
-      >
+      <form-input id="app.obs.useV4" v-model="app.obs.useV4" field="switch" :locked="$isLocked('app.obs.useV4')">
         <template #label>
           <span v-html="$t('obsUseV4')" />
         </template>
       </form-input>
       <form-input
-        id="app.obs.port"
-        v-model="app.obs.port"
-        :label="$t('port')"
-        :locked="$isLocked('app.obs.port')"
-        required
-        :rules="[(v) => !v || isValidPort(v) || $t('fieldInvalid')]"
-        @blur="refreshOBS()"
-        @keydown.enter.prevent="refreshOBS()"
-      />
+id="app.obs.port" v-model="app.obs.port" :label="$t('port')" :locked="$isLocked('app.obs.port')"
+        required :rules="[(v) => !v || isValidPort(v) || $t('fieldInvalid')]" @blur="refreshOBS()"
+        @keydown.enter.prevent="refreshOBS()" />
       <form-input
-        id="app.obs.password"
-        v-model="app.obs.password"
-        field="password"
-        :label="$t('password')"
-        :locked="$isLocked('app.obs.password')"
-        hide-details="auto"
-        required
-        @blur="refreshOBS()"
-        @keydown.enter.prevent="refreshOBS()"
-      />
+id="app.obs.password" v-model="app.obs.password" field="password" :label="$t('password')"
+        :locked="$isLocked('app.obs.password')" hide-details="auto" required @blur="refreshOBS()"
+        @keydown.enter.prevent="refreshOBS()" />
       <v-col cols="12" class="text-right pr-0">
         <v-btn
-          id="app.obs.refreshOBS"
-          :disabled="!obsComplete"
-          :color="scenes.length > 0 ? 'success' : 'primary'"
-          @click="refreshOBS()"
-        >
+id="app.obs.refreshOBS" :disabled="!obsComplete" :color="scenes.length > 0 ? 'success' : 'primary'"
+          @click="refreshOBS()">
           <font-awesome-icon :icon="faGlobe" />
         </v-btn>
       </v-col>
       <form-input
-        id="app.obs.cameraScene"
-        v-model="app.obs.cameraScene"
-        field="select"
-        :items="cameraScenes"
-        :label="$t('obsCameraScene')"
-        :disabled="cameraScenes.length === 0"
-        :locked="$isLocked('app.obs.cameraScene')"
-        required
-      />
+id="app.obs.cameraScene" v-model="app.obs.cameraScene" field="select" :items="cameraScenes"
+        :label="$t('obsCameraScene')" :disabled="cameraScenes.length === 0" :locked="$isLocked('app.obs.cameraScene')"
+        required />
       <form-input
-        id="app.obs.mediaScene"
-        v-model="app.obs.mediaScene"
-        field="select"
-        :items="mediaScenes"
-        :label="$t('obsMediaScene')"
-        :disabled="cameraScenes.length === 0"
-        :locked="$isLocked('app.obs.mediaScene')"
-        required
-      />
+id="app.obs.mediaScene" v-model="app.obs.mediaScene" field="select" :items="mediaScenes"
+        :label="$t('obsMediaScene')" :disabled="cameraScenes.length === 0" :locked="$isLocked('app.obs.mediaScene')"
+        required />
       <form-input
-        id="app.obs.imageScene"
-        v-model="app.obs.imageScene"
-        field="select"
-        :items="imageScenes"
-        :label="$t('obsImageScene')"
-        :disabled="cameraScenes.length === 0"
-        :locked="$isLocked('app.obs.imageScene')"
-        clearable
-      />
+id="app.obs.imageScene" v-model="app.obs.imageScene" field="select" :items="imageScenes"
+        :label="$t('obsImageScene')" :disabled="cameraScenes.length === 0" :locked="$isLocked('app.obs.imageScene')"
+        clearable />
       <form-input
-        id="app.obs.zoomScene"
-        v-model="app.obs.zoomScene"
-        field="select"
-        :items="zoomScenes"
-        :label="$t('obsZoomScene')"
-        explanation="obsZoomSceneExplain"
-        :disabled="cameraScenes.length === 0"
-        :locked="$isLocked('app.obs.zoomScene')"
-        clearable
-      />
+id="app.obs.zoomScene" v-model="app.obs.zoomScene" field="select" :items="zoomScenes"
+        :label="$t('obsZoomScene')" explanation="obsZoomSceneExplain" :disabled="cameraScenes.length === 0"
+        :locked="$isLocked('app.obs.zoomScene')" clearable />
     </template>
-    <v-divider class="mb-6" />
+    <!-- <v-divider class="mb-6" />
     <form-input
       id="app.zoom.enable"
       v-model="app.zoom.enable"
@@ -221,9 +112,9 @@
     >
       <template #label>
         <span v-html="`${$t('enableZoom')} [BETA]`" />
-      </template>
-    </form-input>
-    <template v-if="app.zoom.enable">
+      </template> 
+    </form-input>   -->
+    <!-- <template v-if="app.zoom.enable">
       <form-input
         id="app.zoom.name"
         v-model="app.zoom.name"
@@ -245,7 +136,7 @@
         :label="$t('password')"
         :locked="$isLocked('app.zoom.password')"
         required
-      />
+      /> 
       <form-input
         id="app.zoom.spotlight"
         v-model="app.zoom.spotlight"
@@ -309,9 +200,9 @@
           {{ name }}
         </v-chip>
       </v-col>
-    </template>
+    </template> -->
     <v-divider class="mb-6" />
-    <form-input
+    <!-- <form-input
       id="app.betaUpdates"
       v-model="app.betaUpdates"
       field="switch"
@@ -320,7 +211,7 @@
       <template #label>
         <span v-html="$t('betaUpdates')" />
       </template>
-    </form-input>
+    </form-input> -->
     <form-input
       v-for="option in disableOptions"
       :id="`app.disable${option}`"

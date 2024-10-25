@@ -1,6 +1,6 @@
 {
   "name": "meeting-media-manager",
-  "version": "24.4.8",
+  "version": "1.0.1",
   "description": "Meeting Media Manager",
   "keywords": [
     "M³",
@@ -8,29 +8,30 @@
     "m3",
     "meeting media manager"
   ],
-  "homepage": "https://sircharlo.github.io/meeting-media-manager/",
-  "bugs": "https://github.com/sircharlo/meeting-media-manager/issues",
+  "homepage": "https://github.com/advenimus/meetingmediamanager/",
+  "bugs": "https://github.com/advenimus/meetingmediamanager/issues",
   "license": "AGPL-3.0-or-later",
   "author": {
-    "name": "sircharlo",
-    "url": "https://github.com/sircharlo/"
+    "name": "advenimus",
+    "url": "https://github.com/advenimus/"
   },
   "main": "./dist/main/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sircharlo/meeting-media-manager.git"
+    "url": "https://github.com/advenimus/meetingmediamanager.git"
   },
   "scripts": {
     "prebuild": "node ./pre-build.js",
     "compile": "./node_modules/.bin/tsc -p src/main/tsconfig.json",
     "dev": "node .electron-nuxt/dev.js",
-    "build": "node .electron-nuxt/build.js",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider node .electron-nuxt/build.js",
     "build-dev": "yarn build -c builder-dev.config.js -p never",
     "lint": "node_modules/.bin/eslint --ext .js,.vue,.ts --ignore-path .gitignore -f ./node_modules/eslint-friendly-formatter ./src",
     "lint:fix": "yarn lint --fix",
     "test": "xvfb-maybe -- playwright test",
     "preinstall": "node .electron-nuxt/check-engines.js",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "build:win": "NODE_OPTIONS=--openssl-legacy-provider electron-builder --win --x64"
   },
   "engines": {
     "node": "^16.15.0",
@@ -53,7 +54,7 @@
     "vue-template-compiler": "2.7.15",
     "xml2js": "^0.5.0"
   },
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.5.1",
   "devDependencies": {
     "@babel/core": "7.24.9",
     "@babel/runtime-corejs3": "7.24.8",
@@ -139,5 +140,21 @@
     "webpack": "^4.47.0",
     "webpack-node-externals": "^3.0.0",
     "xvfb-maybe": "^0.2.1"
+  },
+  "build": {
+    "appId": "com.advenimus.meetingmediamanager",
+    "productName": "Meeting Media Manager",
+    "directories": {
+      "output": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "/Users/cjvautour/Github/meetingmediamanager/build/icons/icon.ico"
+    }
   }
 }

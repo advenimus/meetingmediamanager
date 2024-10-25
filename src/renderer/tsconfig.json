@@ -13,7 +13,8 @@
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
-    "noEmit": true,
+    "noEmit": false,
+    "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
