@@ -6708,10 +6708,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:3.37.1":
-  version: 3.37.1
-  resolution: "core-js@npm:3.37.1"
-  checksum: 10/25d6bd15fcc6ffd2a0ec0be57a78ff3358b3e1fdffdb6800fc93dcfdb3854037aee41f3d101aed8c37905d107daf98218b3e7ee95cec383710d2a66a5d9e541b
+"core-js@npm:3.38.1":
+  version: 3.38.1
+  resolution: "core-js@npm:3.38.1"
+  checksum: 10/3c25fdf0b2595ed37ceb305213a61e2cf26185f628455e99d1c736dda5f69e2de4de7126e6a1da136f54260c4fcc982c4215e37b5a618790a597930f854c0a37
   languageName: node
   linkType: hard
 
@@ -11708,7 +11708,7 @@ __metadata:
     "@zoom/meetingsdk": "npm:^3.9.0"
     chokidar: "npm:^3.6.0"
     consola: "npm:^2.15.3"
-    core-js: "npm:^3.37.1"
+    core-js: "npm:^3.38.1"
     cross-env: "npm:^7.0.3"
     css-loader: "npm:^5.2.7"
     deepmerge: "npm:^4.3.1"
